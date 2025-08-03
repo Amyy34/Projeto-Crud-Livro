@@ -1,6 +1,7 @@
 package com.amylee.crudlivro.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Livro {
@@ -9,9 +10,21 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "O título é obrigatório")
     private String titulo;
+    @NotBlank(message = "O Autor é obrigatório")
     private String autor;
     private String isbn;
+
+    public Livro(Long id, String titulo, String autor, String isbn) {
+        this.id = id;
+        this.titulo = titulo;
+        this.autor = autor;
+        this.isbn = isbn;
+    }
+
+    public Livro() {
+    }
 
     public Long getId() {
         return id;
