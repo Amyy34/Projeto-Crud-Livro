@@ -1,14 +1,148 @@
 # Projeto CRUD de Livros 📚
 
-Este é um projeto básico para treinar operações CRUD (Create, Read, Update, Delete) usando Java com Spring Boot e banco de dados MySQL.
+Este é um projeto simples de uma API REST para gerenciar livros. Ele permite criar, listar, atualizar e deletar livros, utilizando Java, Spring Boot, JPA e MySQL. O projeto também inclui testes unitários e de integração com JUnit e Mockito.
 
-## 🔧 Tecnologias usadas
+## 🚀 Funcionalidades
+
+- ✅ Cadastrar um novo livro
+- 📖 Listar todos os livros
+- 🔍 Buscar livro por ID
+- ✏️ Atualizar um livro existente
+- ❌ Deletar um livro
+
+---
+
+## 🧪 Testes
+
+O projeto possui:
+
+- **Testes unitários** com Mockito (ex: camada `Service`)
+- **Testes de integração** com MockMvc (ex: camada `Controller`)
+
+Para rodar os testes:
+
+```bash
+mvn test
+```
+
+---
+
+## 🖥️ Como rodar localmente
+
+### Pré-requisitos
 
 - Java 17+
-- Spring Boot
-- Spring Web
-- Spring Data JPA
+- Maven
 - MySQL
+
+### Banco de dados
+
+Crie o banco:
+
+```sql
+CREATE DATABASE crud_db;
+```
+
+### `application.properties`
+
+```properties
+spring.datasource.url=${SPRING_DATASOURCE_URL}
+spring.datasource.username=${SPRING_DATASOURCE_USERNAME}
+spring.datasource.password=${SPRING_DATASOURCE_PASSWORD}
+spring.jpa.hibernate.ddl-auto=${SPRING_JPA_HIBERNATE_DDL_AUTO}
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+```
+
+### Rodando o projeto
+
+```bash
+mvn spring-boot:run
+```
+
+---
+
+## 📬 Como testar no Postman
+
+### Criar livro (POST)
+```
+POST http://localhost:8080/livro
+```
+Body (JSON):
+
+```json
+{
+  "titulo": "1984",
+  "autor": "George Orwell",
+  "isbn": "987654321"
+}
+```
+
+### Listar todos (GET)
+```
+GET http://localhost:8080/livro
+```
+
+### Buscar por ID (GET)
+```
+GET http://localhost:8080/livro/{id}
+```
+
+### Atualizar livro (PUT)
+```
+PUT http://localhost:8080/livro/{id}
+```
+Body (JSON):
+
+```json
+{
+  "titulo": "Novo Título",
+  "autor": "Novo Autor",
+  "isbn": "123456789"
+}
+```
+
+### Deletar (DELETE)
+```
+DELETE http://localhost:8080/livro/{id}
+```
+
+---
+
+## 🐳 Rodando com Docker
+
+### 1. Build do JAR
+
+```bash
+mvn clean package
+```
+
+### 2. Criar o container com Docker Compose
+
+```bash
+docker-compose up --build
+```
+
+### Estrutura usada:
+
+#### 📄 `Dockerfile`
+
+```dockerfile
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY target/crudlivro-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+```
+
+
+## 📌 Observações
+
+- A API utiliza anotações como `@NotBlank` para validação dos campos.
+- Em testes, o status de criação correto para POST é `201 Created`.
+- As entidades possuem campos privados e foram criados os construtores e métodos getters/setters necessários.
+- O projeto foi empacotado com Maven e usa `pom.xml`.
+
 
 ## 📁 Estrutura da aplicação
 
@@ -26,25 +160,6 @@ Este é um projeto básico para treinar operações CRUD (Create, Read, Update, 
 | POST   | /livros          | Cadastra um novo livro    |
 | PUT    | /livros/{id}     | Atualiza um livro         |
 | DELETE | /livros/{id}     | Deleta um livro pelo ID   |
-
-## ⚙️ Configuração no `application.properties`
-
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/seu_banco
-spring.datasource.username=seu_usuario
-spring.datasource.password=sua_senha
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-```
-
-> Lembre-se de criar manualmente o banco de dados no MySQL com o nome usado em seu_banco.
-
-### ▶️ Como rodar o projeto
-
-- Verifique se o MySQL está rodando e crie o banco com o nome definido.
-- Abra o projeto no IntelliJ ou outra IDE.
-- Execute a classe CrudDemoApplication.
-- Use o Postman ou Insomnia para testar os endpoints.
 
 ---
 
