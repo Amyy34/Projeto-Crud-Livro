@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         void CriarLivro() throws Exception {
             Livro livro = new Livro(null,"1984", "George Orwell","987654321" );
 
-            Mockito.when(livroService.criarLivro(Mockito.any(Livro.class))).thenReturn(new Livro(1L, "1984", "George Orwell", "987654321"));
+            Mockito.when(livroService.criarLivro(Mockito.any(Livro.class))).thenReturn(livro);
 
             mockMvc.perform(MockMvcRequestBuilders.post("/livro")
                             .contentType(MediaType.APPLICATION_JSON)
